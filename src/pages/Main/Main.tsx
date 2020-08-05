@@ -1,11 +1,21 @@
-import React, {FC} from "react";
+import React, {FC, useEffect} from "react";
+import {useHistory} from 'react-router-dom'
 
 const Main: FC = () => {
-  return (
-    <div>
-      main
-    </div>
-  )
+
+  const history = useHistory();
+
+  useEffect(() => {
+    const token = localStorage.getItem("CC_Token");
+    console.log(token);
+    if(!token) {
+      history.push("/login")
+    } else {
+      history.push("/dashboard")
+    }
+  }, [history])
+
+  return <div/>
 }
 
 export default Main;
