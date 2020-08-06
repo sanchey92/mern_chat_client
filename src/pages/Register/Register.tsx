@@ -1,9 +1,10 @@
-import React, {ChangeEvent, FC, FormEvent, useState} from "react";
+import React, {ChangeEvent, FC, useState} from "react";
+import {useHistory} from 'react-router-dom';
 import AxiosService from "../../axiosService";
 import makeToast from "../../toaster";
 
 export type initialStateType = {
-  name: string | null,
+  name?: string | null,
   email: string | null,
   password: string | null
 }
@@ -17,6 +18,7 @@ const initialState: initialStateType = {
 const Register: FC = () => {
 
   const [values, setValues] = useState<initialStateType>(initialState);
+  const history = useHistory()
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const {name, value} = event.currentTarget;
@@ -27,9 +29,10 @@ const Register: FC = () => {
     const {name, email, password}  = values;
     const axiosService: AxiosService = new AxiosService();
     try {
-      const response = await axiosService.post(name, email!, password!);
+      const response = await axiosService.post(name!, email!, password!);
       const data = await response.data;
-      makeToast("success", data.message)
+      makeToast("success", data.message);
+      history.push('/login');
     } catch (e) {
       console.log(e)
     }
