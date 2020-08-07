@@ -17,4 +17,16 @@ export default class AxiosService {
       }
     }
   }
+
+  public async getChatrooms(): Promise<any> {
+    try {
+      return await axios.get("http://localhost:8000/chatroom", {
+        headers: {
+          Authorization: "Bearer" + localStorage.getItem("CC_Token")
+        }
+      })
+    } catch (e) {
+      console.log(e)
+    }
+  }
 }

@@ -26,6 +26,7 @@ const Login: FC = () => {
     try {
       const response = await axiosService.post(null, email!, password!);
       const data = await response.data;
+      localStorage.setItem("CC_Token", JSON.stringify(data.token));
       makeToast("success", data.message);
       history.push('/dashboard');
     } catch (e) {
